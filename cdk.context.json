@@ -1,0 +1,4 @@
+{
+  "ssm:account=670927383464:parameterName=/lambdadocker-deploy-lambdadocker-ecr-repo:region=us-east-1": "arn:aws:ecr:us-east-1:670927383464:repository/codecommit-lambdadocker-ecr",
+  "ssm:account=670927383464:parameterName=lambdadocker-deploy-lambdadocker-ecr-repo:region=us-east-1": "arn:aws:ecr:us-east-1:670927383464:repository/codecommit-lambdadocker-ecr"
+}

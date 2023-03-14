@@ -1,0 +1,6 @@
+app:
+  namespace: "lambdadocker-deploy"
+  service: "codecommit"
+env:
+  id: "111111111111"
+  region: "us-east-1"

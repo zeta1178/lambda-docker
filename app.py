@@ -1,28 +1,43 @@
 #!/usr/bin/env python3
 import os
+import yaml
 
 import aws_cdk as cdk
+from aws_cdk import (
+    App, Tags, Environment,Duration,Stack,RemovalPolicy,
+) 
 
-from lambda_docker.lambda_docker_stack import LambdaDockerStack
+from lambda_docker.lambda_docker_stack import LambdaStack
+from lambda_docker.function_stack import FunctionStack
 
+
+config=yaml.safe_load(open('config.yaml'))
+
+env_main = cdk.Environment(
+    #account=config['env']['id'], 
+    account=os.environ.get("CDK_DEPLOY_ACCOUNT", os.environ["CDK_DEFAULT_ACCOUNT"]),    
+    region=config['env']['region']
+    )
+
+props={
+    "namespace": f"{config['app']['namespace']}",
+    "service": f"{config['app']['service']}",
+}
 
 app = cdk.App()
-LambdaDockerStack(app, "LambdaDockerStack",
-    # If you don't specify 'env', this stack will be environment-agnostic.
-    # Account/Region-dependent features and context lookups will not work,
-    # but a single synthesized template can be deployed anywhere.
 
-    # Uncomment the next line to specialize this stack for the AWS Account
-    # and Region that are implied by the current CLI configuration.
+lambda_stack=LambdaStack(
+    app, 
+    f"{config['app']['namespace']}-lambda",
+    props,
+    env=env_main,  
+)
 
-    #env=cdk.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
-
-    # Uncomment the next line if you know exactly what Account and Region you
-    # want to deploy the stack to. */
-
-    #env=cdk.Environment(account='123456789012', region='us-east-1'),
-
-    # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-    )
+function_stack=FunctionStack(
+    app, 
+    f"{config['app']['namespace']}-function",
+    props,
+    env=env_main,  
+)
 
 app.synth()
