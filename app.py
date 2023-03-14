@@ -8,7 +8,8 @@ from aws_cdk import (
 ) 
 
 from lambda_docker.lambda_docker_stack import LambdaStack
-from lambda_docker.function_stack import FunctionStack
+# from lambda_docker.function_stack import FunctionStack
+from lambda_docker.apprunner_stack import AppRunnerStack
 
 
 config=yaml.safe_load(open('config.yaml'))
@@ -33,10 +34,18 @@ lambda_stack=LambdaStack(
     env=env_main,  
 )
 
-function_stack=FunctionStack(
+# function_stack=FunctionStack(
+#     app, 
+#     f"{config['app']['namespace']}-function",
+#     props,
+#     env=env_main,  
+# )
+
+apprunner_stack=AppRunnerStack(
     app, 
-    f"{config['app']['namespace']}-function",
-    props,
+    f"{config['app']['namespace']}-apprunner",
+    lambda_stack.outputs,
+    referenced_ecr_image_repo=lambda_stack.ecr_image_repo,
     env=env_main,  
 )
 

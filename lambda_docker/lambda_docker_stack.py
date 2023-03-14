@@ -216,6 +216,7 @@ class LambdaStack(Stack):
         # Prepares output attributes for bucket and codebuild
         self.output_props = props.copy()
         self.output_props['artifact_bucket']= artifact_bucket
+        self.output_props['ecr_image_repo']= ecr_image_repo.repository_name
 
         # Prepares output attributes for ECR
         self._ecr_image_repo = ecr_image_repo
