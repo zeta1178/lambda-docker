@@ -1,14 +1,8 @@
 from aws_cdk import (
     aws_lambda,
-    aws_s3,
-    aws_iam,
-    aws_codecommit,
     aws_ecr,
-    aws_codebuild,
-    aws_codepipeline,
-    aws_codepipeline_actions,
     aws_ssm,
-    Aws,App, CfnOutput, Stack, Duration, RemovalPolicy,
+    Stack, Duration,
 )
  
 from constructs import Construct

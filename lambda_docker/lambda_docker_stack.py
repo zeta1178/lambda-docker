@@ -133,10 +133,6 @@ class LambdaStack(Stack):
                         ]
                     }
                 },
-                "shell": "bash",
-                "artifact": {
-                    "files": "image.json"
-                },
             }),
             environment=aws_codebuild.BuildEnvironment(
                 privileged=True,
